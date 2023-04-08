@@ -1,0 +1,22 @@
+version: "3"
+services:
+  redis:
+    image: redis
+    container_name: redis_rate_limiter
+    networks:
+      - rateLimit
+  node_rate_limiter:
+    build:
+      context: .
+    container_name: node_rate_limiter
+    networks:
+      - rateLimit
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+networks:
+  rateLimit:
+    driver: bridge
